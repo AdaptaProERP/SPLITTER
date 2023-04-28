@@ -4,92 +4,84 @@
 #include "Splitter.ch"
 
 FUNCTION Main()
+   LOCAL cTitle:="Testing the Splitter controls"
 
-   PUBLICO("cTitle","Testing the Splitter controls")
-  
-   PUBLICO("cInfo","Lee las indicaciones que he puesto al final de cada " + ;
-                   "programa fuente." + CRLF + "R.Avenda±o.")
-   
-   PUBLICO("oCursorHand")
+   DpMDI(cTitle,"oMdi","TESTSLPLITTER6.EDT",NIL)
 
+   oMdi:Windows(0,0,600,1000,.T.) // Maximizado
 
-   PUBLICO("oWnd")
-   PUBLICO("oMenu")
-   PUBLICO("oBar")
-   PUBLICO("oBmp")
-   PUBLICO("oSay1")
-   PUBLICO("oSay2")
-   PUBLICO("oSay3")
-   PUBLICO("oSay4")
+   oMdi:cInfo:="Lee las indicaciones que he puesto al final de cada " + ;
+                "programa fuente." + CRLF + "R.Avenda±o."
 
-   PUBLICO("oVSplit1")
-   PUBLICO("oVSplit2")
-   PUBLICO("oHSplit1")
-   PUBLICO("oHSplit2")
-   PUBLICO("oWndChild")
-
-//   DEFINE WINDOW oWndChild FROM 0,0 TO 300,400 PIXEL MDICHILD OF oWnd;
-
-   DpMDI("cTitle","oTest","TESTSLPLITTER.EDT",NIL)
-
-   oTest:Windows(0,0,600,1000,.T.) // Maximizado
-   oWndChild:=oTest:oWnd
-
-   @ 0,0     SAY oSay1 PROMPT "Control 1" SIZE 100,205 PIXEL BORDER COLOR CLR_WHITE, CLR_BLUE OF oWndChild
-   @ 0,105   SAY oSay2 PROMPT "Control 2" SIZE 205,100 PIXEL BORDER COLOR CLR_WHITE, CLR_RED OF oWndChild
-   @ 210,0   SAY oSay3 PROMPT "Control 3" SIZE 205,100 PIXEL BORDER COLOR CLR_BLACK, CLR_YELLOW OF oWndChild
-   @ 105,210 SAY oSay4 PROMPT "Control 4" SIZE 100,205 PIXEL BORDER COLOR CLR_WHITE, CLR_GREEN OF oWndChild
-
-   @ 105,105 BITMAP oBmp SIZE 100,100 PIXEL FILE "BITMAPS\LOGO.BMP" ADJUST OF oWndChild
+   oMdi:oMenu:=NIL
+   oMdi:oBmp :=NIL
+   oMdi:oSay1:=NIL
+   oMdi:oSay2:=NIL
+   oMdi:oSay3:=NIL
+   oMdi:oSay4:=NIL
+   oMdi:oCursorHand:=NIL
 
 
-   @ 205,0  SPLITTER oHSplit1 ;
+   oMdi:oVSplit1:=NIL
+   oMdi:oVSplit2:=NIL
+   oMdi:oHSplit1:=NIL
+   oMdi:oHSplit2:=NIL
+
+   @ 0,0     SAY oMdi:oSay1 PROMPT "Control 1" SIZE 100,205 PIXEL BORDER COLOR CLR_WHITE, CLR_BLUE   OF oMdi:oWnd
+   @ 0,105   SAY oMdi:oSay2 PROMPT "Control 2" SIZE 205,100 PIXEL BORDER COLOR CLR_WHITE, CLR_RED    OF oMdi:oWnd
+   @ 210,0   SAY oMdi:oSay3 PROMPT "Control 3" SIZE 205,100 PIXEL BORDER COLOR CLR_BLACK, CLR_YELLOW OF oMdi:oWnd
+   @ 105,210 SAY oMdi:oSay4 PROMPT "Control 4" SIZE 100,205 PIXEL BORDER COLOR CLR_WHITE, CLR_GREEN  OF oMdi:oWnd
+
+   @ 105,105 BITMAP oMdi:oBmp SIZE 100,100 PIXEL FILE "BITMAPS\LOGO.BMP" ADJUST OF oMdi:oWnd
+
+
+   @ 205,0  SPLITTER oMdi:oHSplit1 ;
             HORIZONTAL ;
-            PREVIOUS CONTROLS oSay1, oVSplit2, oBmp ;
-            HINDS CONTROLS oSay3 ;
+            PREVIOUS CONTROLS oMdi:oSay1, oMdi:oVSplit2, oMdi:oBmp ;
+            HINDS CONTROLS oMdi:oSay3 ;
             TOP MARGIN oHSplit2:nFirst + oHSplit2:nWidth + 1 ;
             BOTTOM MARGIN 10 ;
             SIZE 205, 4 PIXEL ;
-            OF oWndChild ;
+            OF oMdi:oWnd ;
             COLOR CLR_RED
 
-  @ 105,205 SPLITTER oVSplit1 ;
+  @ 105,205 SPLITTER oMdi:oVSplit1 ;
             VERTICAL ;
-            PREVIOUS CONTROLS oSay3, oHSplit1, oBmp ;
-            HINDS CONTROLS oSay4 ;
-            LEFT MARGIN oVSplit2:nFirst + oVSplit2:nWidth + 1 ;
+            PREVIOUS CONTROLS oMdi:oSay3, oMdi:oHSplit1, oMdi:oBmp ;
+            HINDS CONTROLS oMdi:oSay4 ;
+            LEFT MARGIN oMdi:oVSplit2:nFirst + oMdi:oVSplit2:nWidth + 1 ;
             RIGHT MARGIN 10 ;
             SIZE 4, 205  PIXEL ;
-            OF oWndChild ;
+            OF oMdi:oWnd ;
             COLOR CLR_BLUE
 
-  @ 100,105 SPLITTER oHSplit2 ;
+  @ 100,105 SPLITTER oMdi:oHSplit2 ;
             HORIZONTAL ;
-            PREVIOUS CONTROLS oSay2 ;
-            HINDS CONTROLS oSay4, oVSplit1, oBmp ;
+            PREVIOUS CONTROLS oMdi:oSay2 ;
+            HINDS CONTROLS oMdi:oSay4, oMdi:oVSplit1, oMdi:oBmp ;
             TOP MARGIN 10 ;
-            BOTTOM MARGIN oHSplit1:nLast + oHSplit1:nWidth + 1 ;
+            BOTTOM MARGIN oMdi:oHSplit1:nLast + oMdi:oHSplit1:nWidth + 1 ;
             SIZE 205, 4 PIXEL ;
-            OF oWndChild ;
+            OF oMdi:oWnd ;
             COLOR CLR_YELLOW
 
-  @ 0,100  SPLITTER oVSplit2 ;
+  @ 0,100  SPLITTER oMdi:oVSplit2 ;
             VERTICAL ;
-            PREVIOUS CONTROLS oSay1 ;
-            HINDS CONTROLS oSay2, oHSplit2, oBmp ;
+            PREVIOUS CONTROLS oMdi:oSay1 ;
+            HINDS CONTROLS oMdi:oSay2, oMdi:oHSplit2, oMdi:oBmp ;
             LEFT MARGIN 10 ;
-            RIGHT MARGIN oVSplit1:nLast + oVSplit1:nWidth + 1 ;
+            RIGHT MARGIN oMdi:oVSplit1:nLast + oMdi:oVSplit1:nWidth + 1 ;
             SIZE 4, 205  PIXEL ;
-            OF oWndChild ;
+            OF oMdi:oWnd ;
             COLOR CLR_GREEN
 
-  oHSplit1:aPrevCtrols := { oSay1, oVSplit2, oBmp }
+  oMdi:oHSplit1:aPrevCtrols := { oMdi:oSay1, oMdi:oVSplit2, oMdi:oBmp }
 
  /* esta asignaci¾n es necesaria por que cuando se definio oHSplit1
      oVSplit2 no estaba definido aun.                                
  */
 
-  oTest:Activate({|| oTest:INICIO()})
+  oMdi:Activate({|| oMdi:INICIO()})
 
 /*
   ACTIVATE WINDOW oWndChild ;
@@ -103,13 +95,13 @@ return nil
 
 FUNCTION INICIO()
 
-   oTest:oWnd:bResized:={||( oHSplit1:AdjLeft(), ;
-                             oVSplit1:AdjBottom(), ;
-                             oHSplit2:AdjRight(), ;
-                         	    oVSplit2:AdjTop() ) }
+   oMdi:oWnd:bResized:={||( oMdi:oHSplit1:AdjLeft(), ;
+                            oMdi:oVSplit1:AdjBottom(), ;
+                            oMdi:oHSplit2:AdjRight(), ;
+                            oMdi:oVSplit2:AdjTop() ) }
 
 
-   Eval( oTest:oWnd:bResized )
+   Eval( oMdi:oWnd:bResized )
 
 
 RETURN .T.
