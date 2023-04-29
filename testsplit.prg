@@ -9,25 +9,14 @@
 #INCLUDE "DPXBASE.CH"
 
 PROCE MAIN()
- 
    local cTitle := "Testing the Splitter controls"
  
    CLOSE ALL
 
-   PUBLICO("oWnd")
-   PUBLICO("oLbx")
-   PUBLICO("oLbx2")
-
-   PUBLICO("oSplit")
-   PUBLICO("oGet")
-
-
    DpMdi("cTitle","oMdi")
    oMdi:Windows(0,0,600,1010,.T.) // Maximizado
 
-   oWnd:=oMdi:oWnd
- 
-   SELECT 1
+    SELECT A
 
    USE DATADBF\DPPROGRA.DBF
  
