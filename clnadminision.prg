@@ -1,15 +1,12 @@
 // Programa   : CLNADMINISION
 // Fecha/Hora : 29/08/2020 23:04:32
-// Propósito  : Formulario de Admisión de Pasientes
+// Propósito  : Formulario de Admisión de Pacientes
 // Creado Por : Juan Navas
-// Llamado por: PlugIn Clinico
+// Llamado por: PlugIn Clínico
 // Aplicación :
 // Tabla      :
 
 #include "DPXBASE.ch"
-
-
-//----------------------------------------------------------------------------//
 
 FUNCTION MAIN()
    local oMenu
@@ -51,7 +48,6 @@ FUNCTION MAIN()
   
    DpMDI(cTitle,"oAdmision","CLNADMINISION.EDT",NIL)
 
-//  oAdmision:Windows(0,0,600,1000,.T.) // Maximizado
    oAdmision:Windows(0,0,aCoors[3]-170,aCoors[4]-20,.T.) // Maximizado
 
    oAdmision:lMsgBar:=.F.
@@ -152,8 +148,6 @@ FUNCTION MAIN()
    oCol:nHeadStrAlign:= AL_RIGHT 
    oCol:nFootStrAlign:= AL_RIGHT 
    oCol:bStrData     :={|nMonto|nMonto:= oAdmision:oBrwP:aArrayData[oAdmision:oBrwP:nArrayAt,2],FDP(nMonto,oDp:cPictValCam)}
-// oCol:cFooter      :=FDP(aTotal[2],"999,999,999.99")
-
 
    oCol:=oAdmision:oBrwP:aCols[3]
    oCol:cHeader      :="Sugerido"+CRLF+"Divisa"
@@ -626,8 +620,6 @@ FUNCTION GETSERVICIOS(cEspecial,oBrw)
         oBrw:GoTop()
         oBrw:Refresh(.T.)
     ENDIF
-
-// ViewArray(aData)
 
 RETURN aData
 
