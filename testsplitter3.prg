@@ -10,7 +10,9 @@
 
 PROCE MAIN()
    LOCAL oMenu
+   LOCAL nAdd   :=0
    LOCAL cTitle := "Testing the Splitter controls"
+   LOCAL aData  :=EJECUTAR("DBFVIEWARRAY","DATADBF\DPLINK.DBF",NIL,.F.)
    LOCAL cInfo  := "Lee las indicaciones que he puesto al final de cada " + ;
                    "programa fuente." + CRLF + "AdaptaPro"
 
@@ -28,6 +30,8 @@ PROCE MAIN()
    oMdi:Windows(0,0,600,1010,.T.) // Maximizado
    oMdi:cInfo:=cInfo
 
+   oMdi:nAltoBrw:=100
+
 
    SELECT 1
    USE DATADBF\DPMENU.DBF
@@ -37,15 +41,22 @@ PROCE MAIN()
    SELECT B
    USE DATADBF\DPPROGRA.DBF 
 
-   @ 0,205 LISTBOX oMdi:oLbx2 FIELDS SIZE 300,200 PIXEL OF oMdi:oWnd
+//   @ 0,205 LISTBOX oMdi:oBrw FIELDS SIZE 300,200 PIXEL OF oMdi:oWnd
 
-   @ 205,205 GET oMdi:oGet VAR B->PRG_TEXTO TEXT SIZE 300,150 PIXEL OF oMdi:oWnd
+   oMdi:oBrw:=TXBrowse():New(oMdi:oWnd)
+   oMdi:oBrw:SetArray( aData, .F. )
+   oMdi:oBrw:CreateFromCode()
+   oMdi:oBrw:Move(0+nAdd,205,.T.)
+   oMdi:oBrw:SetSize(300,200+oMdi:nAltoBrw)
 
-   oMdi:oLbx2:bChange:={|| oMdi:oGet:Refresh() }
 
-   @ 200,205 SPLITTER oMdi:oHSplit ;
+   @ 205+nAdd+oMdi:nAltoBrw,205 GET oMdi:oGet VAR B->PRG_TEXTO TEXT SIZE 300,150 PIXEL OF oMdi:oWnd
+
+   oMdi:oBrw:bChange:={|| oMdi:oGet:Refresh() }
+
+   @ 200+oMdi:nAltoBrw,205 SPLITTER oMdi:oHSplit ;
              HORIZONTAL ;
-             PREVIOUS CONTROLS oMdi:oLbx2 ;
+             PREVIOUS CONTROLS oMdi:oBrw ;
              HINDS CONTROLS oMdi:oGet ;
              TOP MARGIN 80 ;
              BOTTOM MARGIN 80 ;
@@ -53,10 +64,10 @@ PROCE MAIN()
              OF oMdi:oWnd ;
              _3DLOOK
 
-   @ 0,200   SPLITTER oMdi:oVSplit ;
+   @ 0,200+nAdd   SPLITTER oMdi:oVSplit ;
              VERTICAL ;
              PREVIOUS CONTROLS oMdi:oLbx1 ;
-             HINDS CONTROLS oMdi:oLbx2, oMdi:oHSplit, oMdi:oGet ;
+             HINDS CONTROLS oMdi:oBrw, oMdi:oHSplit, oMdi:oGet ;
              LEFT MARGIN 80 ;
              RIGHT MARGIN 80 ;
              SIZE 4, 355  PIXEL ;
@@ -84,6 +95,7 @@ FUNCTION INICIO()
 
    oBtn:cToolTip:="Consultar Vinculos"
 
+   oMdi:oBar:SetSize(NIL,100,.T.)
 
    oMdi:oWnd:bResized:={||( oMdi:oVSplit:AdjLeft(), ;
                             oMdi:oHSplit:AdjRight())}
