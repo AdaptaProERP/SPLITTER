@@ -1,6 +1,6 @@
-// Programa   :
+// Programa   : TESTSPLITTER_LBX3       
 // Fecha/Hora : 20/04/2023 19:52:04
-// Propósito  :
+// Propósito  : TESTSPLITTER_LBX3
 // Creado Por :
 // Llamado por:
 // Aplicación :
@@ -10,12 +10,7 @@
 
 PROCE MAIN()
    LOCAL oMenu
-   LOCAL nAdd   :=0
    LOCAL cTitle := "Testing the Splitter controls"
-   LOCAL aData  :=EJECUTAR("DBFVIEWARRAY","DATADBF\DPLINK.DBF",NIL,.F.)
-   LOCAL aMenu  :=EJECUTAR("DBFVIEWARRAY","DATADBF\DPMENU.DBF",NIL,.F.)
-   LOCAL aBotBar:=EJECUTAR("DBFVIEWARRAY","DATADBF\DPBOTBAR.DBF",NIL,.F.)
-
    LOCAL cInfo  := "Lee las indicaciones que he puesto al final de cada " + ;
                    "programa fuente." + CRLF + "AdaptaPro"
 
@@ -33,55 +28,35 @@ PROCE MAIN()
    oMdi:Windows(0,0,600,1010,.T.) // Maximizado
    oMdi:cInfo:=cInfo
 
-   oMdi:nAltoBrw  :=100
-   oMdi:nAnchoSpl1:=120
 
+   SELECT 1
+   USE DATADBF\DPMENU.DBF
 
-//   SELECT 1
-//   USE DATADBF\DPMENU.DBF
-//   @ 0,0 LISTBOX oMdi:oBrw1 FIELDS SIZE 200+oMdi:nAnchoSpl1,355 PIXEL OF oMdi:oWnd
+   @ 0,0 LISTBOX oMdi:oLbx1 FIELDS SIZE 200,355 PIXEL OF oMdi:oWnd
 
-   oMdi:oBrw1:=TXBrowse():New(oMdi:oWnd)
-   oMdi:oBrw1:SetArray( aMenu, .F. )
-   oMdi:oBrw1:CreateFromCode()
-   oMdi:oBrw1:Move(0,0,.T.)
-   oMdi:oBrw1:SetSize(200+oMdi:nAnchoSpl1,355)
+   SELECT B
+   USE DATADBF\DPPROGRA.DBF 
 
+   @ 0,205 LISTBOX oMdi:oLbx2 FIELDS SIZE 300,200 PIXEL OF oMdi:oWnd
 
-//  SELECT B
-//  USE DATADBF\DPPROGRA.DBF 
-//  @ 0,205 LISTBOX oMdi:oBrw FIELDS SIZE 300,200 PIXEL OF oMdi:oWnd
+   @ 205,205 GET oMdi:oGet VAR B->PRG_TEXTO TEXT SIZE 300,150 PIXEL OF oMdi:oWnd
 
-   oMdi:oBrw:=TXBrowse():New(oMdi:oWnd)
-   oMdi:oBrw:SetArray( aData, .F. )
-   oMdi:oBrw:CreateFromCode()
-   oMdi:oBrw:Move(0,205+oMdi:nAnchoSpl1,.T.)
-   oMdi:oBrw:SetSize(300,200+oMdi:nAltoBrw)
+   oMdi:oLbx2:bChange:={|| oMdi:oGet:Refresh() }
 
-// @ 205+oMdi:nAltoBrw,205+oMdi:nAnchoSpl1 GET oMdi:oGet VAR B->PRG_TEXTO TEXT SIZE 300,150 PIXEL OF oMdi:oWnd
-
-   oMdi:oBrw3:=TXBrowse():New(oMdi:oWnd)
-   oMdi:oBrw3:SetArray( aBotBar, .F. )
-   oMdi:oBrw3:CreateFromCode()
-   oMdi:oBrw3:Move(205+oMdi:nAltoBrw,205+oMdi:nAnchoSpl1,.T.)
-   oMdi:oBrw3:SetSize(300,150,.T.)
-
-// SOLO PARA EL GET   oMdi:oBrw:bChange:={|| oMdi:oGet:Refresh() }
-
-   @ 200+oMdi:nAltoBrw,205+oMdi:nAnchoSpl1 SPLITTER oMdi:oHSplit ;
+   @ 200,205 SPLITTER oMdi:oHSplit ;
              HORIZONTAL ;
-             PREVIOUS CONTROLS oMdi:oBrw ;
-             HINDS CONTROLS oMdi:oBrw3 ;
+             PREVIOUS CONTROLS oMdi:oLbx2 ;
+             HINDS CONTROLS oMdi:oGet ;
              TOP MARGIN 80 ;
              BOTTOM MARGIN 80 ;
              SIZE 300, 4  PIXEL ;
              OF oMdi:oWnd ;
              _3DLOOK
 
-   @ 0,200+oMdi:nAnchoSpl1   SPLITTER oMdi:oVSplit ;
+   @ 0,200   SPLITTER oMdi:oVSplit ;
              VERTICAL ;
-             PREVIOUS CONTROLS oMdi:oBrw1 ;
-             HINDS CONTROLS oMdi:oBrw, oMdi:oHSplit, oMdi:oBrw3 ;
+             PREVIOUS CONTROLS oMdi:oLbx1 ;
+             HINDS CONTROLS oMdi:oLbx2, oMdi:oHSplit, oMdi:oGet ;
              LEFT MARGIN 80 ;
              RIGHT MARGIN 80 ;
              SIZE 4, 355  PIXEL ;
@@ -109,7 +84,6 @@ FUNCTION INICIO()
 
    oBtn:cToolTip:="Consultar Vinculos"
 
-   oMdi:oBar:SetSize(NIL,100,.T.)
 
    oMdi:oWnd:bResized:={||( oMdi:oVSplit:AdjLeft(), ;
                             oMdi:oHSplit:AdjRight())}
