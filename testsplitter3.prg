@@ -29,7 +29,7 @@ PROCE MAIN()
            ENDMENU
    ENDMENU
 
-   DpMdi("cTitle","oMdi",,,oMenu)
+   DpMdi("cTitle","oMdi","SPLITER3.EDT",,oMenu)
    oMdi:Windows(0,0,600,1010,.T.) // Maximizado
    oMdi:cInfo:=cInfo
 
@@ -52,11 +52,11 @@ PROCE MAIN()
 //  USE DATADBF\DPPROGRA.DBF 
 //  @ 0,205 LISTBOX oMdi:oBrw FIELDS SIZE 300,200 PIXEL OF oMdi:oWnd
 
-   oMdi:oBrw:=TXBrowse():New(oMdi:oWnd)
-   oMdi:oBrw:SetArray( aData, .F. )
-   oMdi:oBrw:CreateFromCode()
-   oMdi:oBrw:Move(0,205+oMdi:nAnchoSpl1,.T.)
-   oMdi:oBrw:SetSize(300,200+oMdi:nAltoBrw)
+   oMdi:oBrw2:=TXBrowse():New(oMdi:oWnd)
+   oMdi:oBrw2:SetArray( aData, .F. )
+   oMdi:oBrw2:CreateFromCode()
+   oMdi:oBrw2:Move(0,205+oMdi:nAnchoSpl1,.T.)
+   oMdi:oBrw2:SetSize(300,200+oMdi:nAltoBrw)
 
 // @ 205+oMdi:nAltoBrw,205+oMdi:nAnchoSpl1 GET oMdi:oGet VAR B->PRG_TEXTO TEXT SIZE 300,150 PIXEL OF oMdi:oWnd
 
@@ -70,7 +70,7 @@ PROCE MAIN()
 
    @ 200+oMdi:nAltoBrw,205+oMdi:nAnchoSpl1 SPLITTER oMdi:oHSplit ;
              HORIZONTAL ;
-             PREVIOUS CONTROLS oMdi:oBrw ;
+             PREVIOUS CONTROLS oMdi:oBrw2 ;
              HINDS CONTROLS oMdi:oBrw3 ;
              TOP MARGIN 80 ;
              BOTTOM MARGIN 80 ;
@@ -81,7 +81,7 @@ PROCE MAIN()
    @ 0,200+oMdi:nAnchoSpl1   SPLITTER oMdi:oVSplit ;
              VERTICAL ;
              PREVIOUS CONTROLS oMdi:oBrw1 ;
-             HINDS CONTROLS oMdi:oBrw, oMdi:oHSplit, oMdi:oBrw3 ;
+             HINDS CONTROLS oMdi:oBrw2, oMdi:oHSplit, oMdi:oBrw3 ;
              LEFT MARGIN 80 ;
              RIGHT MARGIN 80 ;
              SIZE 4, 355  PIXEL ;
