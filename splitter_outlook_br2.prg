@@ -10,14 +10,14 @@
 
 PROCE MAIN()
    LOCAL oMenu,oFont,oBtn
+   LOCAL aBtn   :={}
+   LOCAL bAction:=nil
    LOCAL nAdd   :=0,I,nGroup:=0
    LOCAL cTitle := "Testing the Splitter controls"
    LOCAL aData  :=EJECUTAR("DBFVIEWARRAY","DATADBF\DPLINK.DBF",NIL,.F.)
    LOCAL aMenu  :=EJECUTAR("DBFVIEWARRAY","DATADBF\DPMENU.DBF",NIL,.F.)
    LOCAL aBotBar:=EJECUTAR("DBFVIEWARRAY","DATADBF\DPBOTBAR.DBF",NIL,.F.)
-   LOCAL aBtn   :={}
-   LOCAL bAction:=nil
-
+ 
    LOCAL cInfo  := "Lee las indicaciones que he puesto al final de cada " + ;
                    "programa fuente." + CRLF + "AdaptaPro"
 
